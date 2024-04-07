@@ -110,3 +110,8 @@
     color: #2E2F42;
     text-align: center;
 }
+
+.loader {
+  color: red;
+  text-align: center;
+}
