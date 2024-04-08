@@ -2,25 +2,22 @@ import iziToast from "izitoast";   // Описаний у документаці
 import "izitoast/dist/css/iziToast.min.css"; // Додатковий імпорт стилів
 import SimpleLightbox from "simplelightbox"; // Описаний у документації
 import "simplelightbox/dist/simple-lightbox.min.css"; // Додатковий імпорт стилів
-    const BASE_URL = "https://pixabay.com/api/";
+
 const searchForm = document.querySelector(".js-search-form");
 const list = document.querySelector(".js-list");
-const inputPhoto = document.querySelector(".search-input");
 const loader = document.querySelector(".loader");
+
 loader.style.display = 'none';
 searchForm.addEventListener("submit", handleSubmit);
 
 function handleSubmit(event) {
     event.preventDefault();
-    const { seachImage } = event.currentTarget.elements;
-    //console.log("seachImage = те, що ввели в поле пошуку ", seachImage.value);
+    const { searchImage } = event.currentTarget.elements;
     loader.style.display = 'block';
 
-    serviceSearchPhoto(seachImage.value)
+    serviceSearchPhoto(searchImage.value)
         .then(data => {
             loader.style.display = 'none';
-            // console.log("data - результат пошуку", data);
-            // console.log("data - кількість результат пошуку", data.hits.length);
                 if (data.hits.length === 0) {
                     iziToast.error({
                     title: 'Error',
@@ -32,16 +29,13 @@ function handleSubmit(event) {
                 });
                 }
 
-            list.insertAdjacentHTML("beforeend", createMarkup(data.hits));
+            list.innerHTML = createMarkup(data.hits);
             const lightBox = new SimpleLightbox('.js-list a', {
                 captions: true,
                 captionsData: 'alt',
                 captionPosition: 'bottom', 
             });
-
-            lightBox.refresh();
-            searchForm.reset();
-            // 
+            
         })
         .catch(error => {
             loader.style.display = 'none';
@@ -50,17 +44,17 @@ function handleSubmit(event) {
     searchForm.reset(); //очистити форму searchForm - це змінна на яку чіпляємо слухач
 }    
     
-function serviceSearchPhoto(seachImage = "") {
+function serviceSearchPhoto(searchImage = "") {
     const API_KEY = "43270282-4a5d06b91258db09a976f913c";
     const params = new URLSearchParams({
         key: API_KEY,
-        q: seachImage,
+        q: searchImage,
         image_type: "photo",
         orientation: "horizontal",
         safesearch: "true"
     });
 
-    // const BASE_URL = "https://pixabay.com/api/";
+    const BASE_URL = "https://pixabay.com/api/";
 
     return fetch(`${BASE_URL}?${params}`)        
             .then(response => {
@@ -100,9 +94,3 @@ function createMarkup(arr) {
         </li>
     `).join("");
 }
-
-// const lightbox = new SimpleLightbox('.js-list a', {
-//     captionPosition: 'center', 
-//     captionsData: 'alt',
-//     captionsDelay: 250
-// });
