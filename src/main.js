@@ -18,9 +18,8 @@ function handleSubmit(event) {
     serviceSearchPhoto(searchImage.value)
         .then(data => {
             loader.style.display = 'none';
-            console.log("data - результат пошуку", data);
-            console.log("data - кількість результат пошуку", data.hits.length);
             if (data.hits.length === 0) {
+                    
                 iziToast.warning({
                     title: 'Caution',
                     titleColor: 'white',
@@ -29,19 +28,15 @@ function handleSubmit(event) {
                     message: "Sorry, there are no images matching your search query. Please try again!",
                     position: 'topRight',
                 });
-                // iziToast.error({
-                // title: 'Error',
-            }
-        })
-        .then(() => {
-        list.insertAdjacentHTML("beforeend", createMarkup(data.hits));
+                }
 
-        //list.innerHTML = createMarkup(data.hits);
-        const lightBox = new SimpleLightbox('.js-list a', {
-            captions: true,
-            captionsData: 'alt',
-            captionPosition: 'bottom',
-        });
+            list.innerHTML = createMarkup(data.hits);
+            const lightBox = new SimpleLightbox('.js-list a', {
+                captions: true,
+                captionsData: 'alt',
+                captionPosition: 'bottom', 
+            });
+            
         })
         .catch(error => {
             loader.style.display = 'none';
