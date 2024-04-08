@@ -2,7 +2,7 @@ import iziToast from "izitoast";   // Описаний у документаці
 import "izitoast/dist/css/iziToast.min.css"; // Додатковий імпорт стилів
 import SimpleLightbox from "simplelightbox"; // Описаний у документації
 import "simplelightbox/dist/simple-lightbox.min.css"; // Додатковий імпорт стилів
-
+    const BASE_URL = "https://pixabay.com/api/";
 const searchForm = document.querySelector(".js-search-form");
 const list = document.querySelector(".js-list");
 const inputPhoto = document.querySelector(".search-input");
@@ -19,8 +19,8 @@ function handleSubmit(event) {
     serviceSearchPhoto(seachImage.value)
         .then(data => {
             loader.style.display = 'none';
-            //console.log("data - результат пошуку", data);
-            //console.log("data - кількість результат пошуку", data.hits.length);
+            // console.log("data - результат пошуку", data);
+            // console.log("data - кількість результат пошуку", data.hits.length);
                 if (data.hits.length === 0) {
                     iziToast.error({
                     title: 'Error',
@@ -31,17 +31,17 @@ function handleSubmit(event) {
                     position: 'topRight',
                 });
                 }
-            //
-            list.innerHTML = ("beforeend", createMarkup(data.hits));
+
+            list.insertAdjacentHTML("beforeend", createMarkup(data.hits));
             const lightBox = new SimpleLightbox('.js-list a', {
                 captions: true,
                 captionsData: 'alt',
                 captionPosition: 'bottom', 
             });
 
-            // lightBox.refresh();
-            // searchForm.reset();
-            // ??
+            lightBox.refresh();
+            searchForm.reset();
+            // 
         })
         .catch(error => {
             loader.style.display = 'none';
@@ -60,7 +60,7 @@ function serviceSearchPhoto(seachImage = "") {
         safesearch: "true"
     });
 
-    const BASE_URL = "https://pixabay.com/api";
+    // const BASE_URL = "https://pixabay.com/api/";
 
     return fetch(`${BASE_URL}?${params}`)        
             .then(response => {
@@ -101,8 +101,8 @@ function createMarkup(arr) {
     `).join("");
 }
 
-const lightbox = new SimpleLightbox('js-list a', {
-    captionPosition: 'center', 
-    captionsData: 'alt',
-    captionsDelay: 250
-});
+// const lightbox = new SimpleLightbox('.js-list a', {
+//     captionPosition: 'center', 
+//     captionsData: 'alt',
+//     captionsDelay: 250
+// });
