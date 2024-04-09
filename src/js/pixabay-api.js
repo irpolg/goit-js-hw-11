@@ -1,14 +1,9 @@
 //У файлі pixabay-api.js зберігай 
 //функції для HTTP - запитів.
 
-// Пишимо в main.js
+// Пишемо в main.js
 // 	В render-functions.js - повинна бути функція яка створю розмітку. Імпортується в main.js
 // 	В pixabay-api.js - робимо функцію запиту на сервер. Імпортується в main.js
-
-//export default function serviceSearchPhoto(searchImage = "") {
-// 	return `Welcome, ${username}!`;
-// }
-
 
 // function serviceSearchPhoto(searchImage = "") {
 export default function serviceSearchPhoto(searchImage = "") {

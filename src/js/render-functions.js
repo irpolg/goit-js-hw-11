@@ -1,5 +1,4 @@
-//У файлі render-functions.js 
-//створи функції для 
+//У файлі render-functions.js створи функції для 
 //відображення елементів інтерфейсу.
 
 //function createMarkup(arr) {
